@@ -1,4 +1,4 @@
- 🐾 Veterinary Management System
+![BCO 2193e830-e000-4211-9988-c4733cf97ec4](https://github.com/user-attachments/assets/dc6bbef6-b1ba-450f-9ad2-f4549cc65668) 🐾 Veterinary Management System
 
 Veteriner kliniklerinin hayvan, müşteri, doktor, aşı ve randevu takibini kolaylaştırmak için geliştirilmiş bir RESTful API uygulamasıdır.
 
@@ -33,8 +33,39 @@ Veteriner kliniklerinin hayvan, müşteri, doktor, aşı ve randevu takibini kol
 
 Entity’ler arası ilişki yapısı:
 
-![UML Diyagramı](./docs/veterinary_uml.png)
-![Uploading BCO.2193e830-e000-4211-9988-c4733cf97ec4.png…]()
+
++----------------+             +----------------+            +----------------+
+|   Customer     |1           *|     Animal     |1          *|    Vaccine     |
++----------------+-------------+----------------+------------+----------------+
+| - id: Long     |             | - id: Long     |            | - id: Long     |
+| - name: String |             | - name: String |            | - name: String |
+| - phone: String|             | - species: Str |            | - code: String |
+| - mail: String |             | - breed: String|            | - startDate: LocalDate |
+| - address: Str |             | - gender: Str  |            | - endDate: LocalDate   |
+| - city: String |             | - colour: Str  |            |                    |
++----------------+             | - dob: LocalDate            |                    |
+                               +----------------+            +------------------+
+                                        |
+                                        |1
+                                        |
+                              +---------+---------+
+                              |     Appointment    |
+                              +--------------------+
+                              | - id: Long         |
+                              | - appointmentDate: LocalDateTime |
+                              +--------+-----------+
+                                       |
+               +----------------+     1|          1      +------------------+
+               |    Doctor      |<------+--------------->|  AvailableDate   |
+               +----------------+                      +------------------+
+               | - id: Long     |                      | - id: Long       |
+               | - name: String |                      | - availableDate: LocalDate |
+               | - phone: String|                      +------------------+
+               | - mail: String |
+               | - address: Str |
+               | - city: String |
+               +----------------+
+
 
 ---
 
