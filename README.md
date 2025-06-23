@@ -1,191 +1,89 @@
-Veterinary Management System API
-Bu proje, bir veteriner kliniğinin ihtiyaç duyduğu temel işlevleri karşılamak üzere tasarlanmış RESTful API geliştirmeye yöneliktir. Proje içerisinde;
+ 🐾 Veterinary Management System
 
-Hayvanlar ve Sahipleri (Müşteriler):
+Veteriner kliniklerinin hayvan, müşteri, doktor, aşı ve randevu takibini kolaylaştırmak için geliştirilmiş bir RESTful API uygulamasıdır.
 
-Hayvanların eklenmesi, güncellenmesi, görüntülenmesi ve silinmesi
+---
 
-Müşteri (hayvan sahibi) bilgilerinin yönetimi ve isme göre filtreleme
+## 🚀 Özellikler
 
-Belirli bir müşteriye ait tüm hayvanların listelenmesi
+- Hayvan ve müşteri yönetimi (ekle, listele, güncelle, sil)
+- Aşı kayıtları ve tekrar aşı kuralı
+- Doktorların çalışma günleri
+- Randevu sistemi (müsaitlik ve saat çakışma kontrolleri)
+- İsimle arama ve tarih filtrelemeleri
+- Custom exception'lar ve anlamlı hata mesajları
 
-Aşıların Yönetimi:
+---
 
-Hayvanlara uygulanan aşıların eklenmesi, güncellenmesi, görüntülenmesi ve silinmesi
+## 🧰 Kullanılan Teknolojiler
 
-Aynı tip (adı ve kodu aynı) aşıdan, aşı koruyuculuk bitiş tarihi henüz geçmemişse, yeni aşı eklenemeyecek şekilde kontrol
+| Teknoloji     | Açıklama                |
+|---------------|-------------------------|
+| Java 17       | Programlama dili        |
+| Spring Boot   | Uygulama çatısı         |
+| Spring Data JPA | Veritabanı işlemleri |
+| PostgreSQL / MySQL | Veritabanı         |
+| Lombok        | Kod sadeleştirme        |
+| Maven         | Build ve bağımlılıklar |
 
-Belirli hayvan id’sine göre aşı kayıtlarının listelenmesi
+---
 
-Aşı koruyuculuk bitiş tarihi belli bir tarih aralığında olan aşıların, hayvan bilgileriyle birlikte listelenmesi
+## 🧩 UML Diyagramı
 
-Randevu Yönetimi:
+Entity’ler arası ilişki yapısı:
 
-Hayvanların aşı ve muayene randevularının oluşturulması, güncellenmesi, görüntülenmesi ve silinmesi
+![UML Diyagramı](./docs/veterinary_uml.png)
 
-Randevular LocalDateTime ile tarih ve saat bilgisi içerecek şekilde kaydedilir
+---
 
-Randevu oluşturulurken, doktorun o gün müsait olup olmadığı (sadece tarih olarak kayıtlı AvailableDate üzerinden) kontrolü
+## 📦 Kurulum
 
-Aynı doktor için girilen tarih ve saatte başka bir randevu var mı kontrolü (çakışma önleme)
-
-Çakışma veya müsaitlik olmadığında özel (custom) exception fırlatılarak hata mesajı verilir
-
-Randevular; doktor ve hayvana göre ya da girilen tarih aralığına göre filtrelenebilmelidir
-
-Veteriner Doktor ve Müsait Gün Yönetimi:
-
-Doktorların kaydedilmesi, bilgilerinin güncellenmesi, görüntülenmesi ve silinmesi
-
-Doktorların çalıştığı günlerin (sadece tarih bilgisi; saat, dakika, saniye içermeyen) eklenmesi, güncellenmesi, görüntülenmesi ve silinmesi
-
-Teknolojiler ve Araçlar
-Java 17 (veya daha güncel bir sürüm)
-
-Spring Boot (REST API geliştirme, Spring Data JPA)
-
-PostgreSQL (veritabanı)
-
-Maven (proje yönetimi)
-
-Lombok (getter, setter, constructor otomasyonu)
-
-Swagger/OpenAPI (opsiyonel) API dokümantasyonu için
-
-Postman API testleri ve koleksiyon yönetimi
-
-Proje Yapısı
-Proje aşağıdaki temel klasör yapısına göre organize edilmiştir:
-
-veterinary-management-system/
-│
-├── src/
-│   ├── main/
-│   │   ├── java/
-│   │   │   └── com/
-│   │   │       └── suheda/
-│   │   │           └── veterinary/
-│   │   │               ├── VeterinaryManagementSystemApplication.java   // Ana uygulama sınıfı
-│   │   │               ├── config/                                     // Swagger, Security gibi konfigürasyon
-│   │   │               ├── controller/                                 // API endpoint’leri (Animal, Customer, Doctor, Appointment vb.)
-│   │   │               ├── dto/                                        // Veri transfer nesneleri
-│   │   │               ├── entity/                                     // Tüm entity sınıfları (Animal, Customer, Vaccine, Doctor, AvailableDate, Appointment)
-│   │   │               ├── exception/                                  // Custom exception’lar ve global hata yönetimi
-│   │   │               ├── repository/                                 // Spring Data JPA repository’leri
-│   │   │               └── service/                                    // İş mantığı (interface ve implementasyon)
-│   │   │                   └── impl/
-│   │   └── resources/
-│   │       └── application.properties                                // Uygulama konfigürasyonu
-│   │
-├── src/test/java/com/suheda/veterinary/
-│       └── ...                                                     // Test sınıfları
-│
-├── pom.xml                                                         // Maven yapılandırması
-└── README.md                                                       // Proje açıklaması
-Entity'ler
-Proje aşağıdaki temel entity'lerden oluşur:
-
-Animal:
-
-id, name, species, breed, gender, colour, dateOfBirth
-
-Her hayvan, bir Customer (sahibi) ile ilişkilidir.
-
-Customer:
-
-id, name, phone, mail, address, city
-
-Bir müşterinin birden fazla hayvanı olabilir.
-
-Vaccine:
-
-id, name, code, protectionStartDate, protectionFinishDate
-
-Her aşı kaydı, ilgili bir Animal ile ilişkilidir.
-
-Doctor:
-
-id, name, phone, mail, address, city
-
-Doktorun randevuları ve uygun olduğu günler (AvailableDate) kaydedilir.
-
-AvailableDate:
-
-id, availableDate (sadece tarih bilgisi)
-
-Her kayıt, bir Doctor ile ilişkilidir.
-
-Appointment:
-
-id, appointmentDate (LocalDateTime olarak tarih ve saat bilgisi)
-
-Her randevu, bir Doctor ve bir Animal ilişkilendirmesi içerir.
-
-Kurulum & Çalıştırma
-Ön Koşullar:
-
-JDK 17 veya üstü
-
-Maven
-
-PostgreSQL: Veritabanı sunucusunun kurulu ve çalışma durumunda olması
-
-IDE (IntelliJ IDEA, Eclipse vb.)
-
-Veritabanı Ayarları: src/main/resources/application.properties dosyasında veritabanı bağlantı bilgilerini (url, kullanıcı adı, şifre, driver) yapılandır.
-
-Projeyi Çalıştırma:
-
-Terminal veya IDE üzerinden Maven komutunu çalıştırın:
-
+```bash
+git clone https://github.com/kullanici-adi/veterinary-management-system.git
+cd veterinary-management-system
+mvn clean install
 mvn spring-boot:run
-Uygulama başlatıldığında, spring.jpa.hibernate.ddl-auto=update ayarı sayesinde veritabanında tablolar otomatik olarak oluşturulur.
+🔧 src/main/resources/application.properties dosyasını veritabanına göre güncelleyin.
 
-API Dokümantasyonu: (Swagger/OpenAPI entegrasyonu yapıldıysa)
+📮 Örnek API Kullanımı
+✅ Hayvan Ekleme
+http
+POST /api/animals
+Content-Type: application/json
+json
+{
+  "name": "Pamuk",
+  "species": "Kedi",
+  "breed": "Tekir",
+  "gender": "Dişi",
+  "colour": "Beyaz",
+  "dateOfBirth": "2021-06-01",
+  "owner": { "id": 1 }
+}
+📁 Proje Klasör Yapısı (önerilen)
+├── README.md
+├── veterinary.sql
+├── docs/
+│   ├── veterinary_uml.png
+│   └── postman_preview.png
+├── postman/
+│   └── Veterinary System - Suheda.postman_collection.json
+├── src/
+│   └── main/...
+💬 Hata Yönetimi
+"Kayıt sistemde mevcut." – Duplicate verilerde
 
-Uygulama çalıştığında, tarayıcı üzerinden http://localhost:8080/swagger-ui.html adresinden API dokümantasyonunu görüntüleyebilirsin.
+"Girilen saatte başka bir randevu mevcuttur." – Çakışan randevu
 
-API Kullanımı
-Proje, temel CRUD işlemlerinin yanı sıra aşağıdaki iş kurallarını içerir:
+"Doktor bu tarihte çalışmamaktadır!" – Uygun olmayan gün
 
-Filtreleme Endpoints:
+"ID'li kayıt bulunamadı." – Silme/güncelleme öncesi kayıt kontrolü
 
-Müşteriler isme göre filtrelenecek.
+📬 Postman Koleksiyonu
+Tüm istekler örnek JSON gövdeleriyle birlikte şu dosyada: 📂 Veterinary System - Suheda.postman_collection.json
 
-Hayvanlar isme veya müşteri (sahip) id’sine göre filtrelenecek.
+🧪 Veritabanı Yedeklemesi
+📄 veterinary.sql dosyasını yükleyerek örnek kayıtlarla tablo yapısını import edebilirsin.
 
-Belirli bir hayvana ait tüm aşı kayıtlarının listelenmesi.
-
-Aşı İş Kuralları:
-
-Aynı tip aşının (adı ve kodu aynı) koruyuculuk bitiş tarihi henüz geçmemişse, yeni aşı eklenmesine izin verilmez.
-
-Randevu Oluşturma İş Kuralları:
-
-Girilen randevu tarihinin (sadece tarih kısmı) doktorun müsaitlik günleri içerisinde olup olmadığı kontrol edilir.
-
-Aynı doktor için, girilen tarih ve saatte başka bir randevunun olup olmadığı kontrol edilir.
-
-Eğer kontrol başarısız olursa, custom exception fırlatılarak "Doktor bu tarihte çalışmamaktadır! / Girilen saatte başka bir randevu mevcuttur." mesajı verilir.
-
-Randevular, doktor veya hayvana göre ya da kullanıcı tarafından girilen tarih aralığına göre filtrelenebilir.
-
-Postman Koleksiyonu
-Proje API'lerini test etmek için Postman koleksiyonu oluşturabilirsiniz. Koleksiyon içerisinde;
-
-Customer, Animal, Vaccine, Doctor, AvailableDate, Appointment gibi CRUD endpointleri yer alır.
-
-Örnek istekler ve JSON body örnekleri ile API'nin nasıl kullanılacağını gösterir.
-
-(Daha önce paylaşılan örnek JSON'ları Postman’a import ederek hızlıca testlere başlayabilirsiniz.)
-
-Katkıda Bulunma
-Her türlü öneri ve geliştirme katkılarını memnuniyetle karşılıyoruz. Pull request’ler, issue bildirimi vs. için repository’yi fork ederek başlayabilirsiniz.
-
-Lisans
-Bu proje, MIT Lisansı kapsamında lisanslanmıştır.
-
-Sonuç
-Bu README, projenin temel işlevlerini, yapılandırmasını, API kullanımını ve çalışma kurallarını detaylandırmaktadır. Projenin geliştirilmesi sırasında karşılaşabileceğiniz her türlü problemi adım adım çözecek yapıda tasarlanmıştır. Herhangi bir sorunuz veya eklemek istediğiniz özellikler olursa, tartışmaya açığız!
-
-Bu README projesi, yukarıda belirttiğin gereksinimlere uygun kapsamlı bir dokümantasyon sunar. Herhangi bir ekleme veya detaylandırma yapmak istersen, ona göre güncelleyebiliriz!
+👩‍💻 Geliştirici
+Şuheda 💻 Backend Developer · 🎯 Spring Boot & UML Odaklı 🌍 Bursa, Türkiye
