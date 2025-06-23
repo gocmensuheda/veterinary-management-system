@@ -1,5 +1,4 @@
 package dev.patika.veterinary_management_system.service.impl;
-package dev.patika.veterinary_management_system.service.impl;
 
 import dev.patika.veterinary_management_system.entity.Vaccine;
 import dev.patika.veterinary_management_system.exception.DuplicateVaccineException;
@@ -12,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class VaccineServiceImpl extends VaccineService {
+public class VaccineServiceImpl implements VaccineService {
 
     private final VaccineRepository vaccineRepository;
 

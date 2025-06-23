@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class DoctorServiceImpl extends DoctorService {
+public class DoctorServiceImpl implements DoctorService {
 
     private final DoctorRepository doctorRepository;
 

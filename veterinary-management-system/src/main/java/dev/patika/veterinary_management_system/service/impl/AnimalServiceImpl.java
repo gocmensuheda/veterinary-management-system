@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class AnimalServiceImpl extends AnimalService {
+public class AnimalServiceImpl implements AnimalService {
 
     private final AnimalRepository animalRepository;
 
