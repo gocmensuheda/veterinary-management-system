@@ -30,9 +30,11 @@ Veteriner kliniklerinin hayvan, müşteri, doktor, aşı ve randevu takibini kol
 
 ## 🧩 UML Diyagramı
 
+
 Entity’ler arası ilişki yapısı:
 
 ![UML Diyagramı](./docs/veterinary_uml.png)
+![Uploading BCO.2193e830-e000-4211-9988-c4733cf97ec4.png…]()
 
 ---
 
